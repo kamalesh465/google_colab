@@ -1,0 +1,145 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNgwLn1zHb7dq8TIWy0Advx",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/kamalesh465/google_colab/blob/main/z_score_outlier\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "rFL2o66JMhKf"
+      },
+      "outputs": [],
+      "source": [
+        "import numpy as np"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "dataset = [11,10,12,13,14,15,100,12,13,15,17,102,11,12,103]"
+      ],
+      "metadata": {
+        "id": "ieyEihLCMpgd"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "outliers = []\n",
+        "def detect_outliers(data):\n",
+        "  threshold = 1\n",
+        "  mean = np.mean(data)\n",
+        "  std = np.std(data)\n",
+        "  for i in data:\n",
+        "    z_score = (i-mean) / std\n",
+        "    if np.abs(z_score) > threshold:\n",
+        "      outliers.append(i)\n",
+        "  return outliers"
+      ],
+      "metadata": {
+        "id": "s0fRpjk4M-BF"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "outlier_pt = detect_outliers(dataset)"
+      ],
+      "metadata": {
+        "id": "u40_GjRgN6s6"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import numpy as np\n",
+        "\n",
+        "# To demonstrate the effect of changing the threshold without altering the original function,\n",
+        "# let's define a temporary detection function here.\n",
+        "def detect_outliers_with_threshold(data, threshold_value):\n",
+        "  temp_outliers = []\n",
+        "  mean = np.mean(data)\n",
+        "  std = np.std(data)\n",
+        "  for i in data:\n",
+        "    z_score = (i-mean) / std\n",
+        "    if np.abs(z_score) > threshold_value:\n",
+        "      temp_outliers.append(i)\n",
+        "  return temp_outliers\n",
+        "\n",
+        "print(f\"--- Outliers with current dataset and threshold ---\")\n",
+        "print(f\"Current outliers with threshold=1: {outlier_pt}\\n\")\n",
+        "\n",
+        "# Demonstrate with a higher threshold (e.g., 2)\n",
+        "higher_threshold = 2\n",
+        "outliers_higher = detect_outliers_with_threshold(dataset, higher_threshold)\n",
+        "print(f\"Outliers with a higher threshold={higher_threshold}: {outliers_higher}\")\n",
+        "print(f\"  (Fewer outliers are detected as points need to be further from the mean.)\\n\")\n",
+        "\n",
+        "# Demonstrate with a lower threshold (e.g., 0.5)\n",
+        "lower_threshold = 0.5\n",
+        "outliers_lower = detect_outliers_with_threshold(dataset, lower_threshold)\n",
+        "print(f\"Outliers with a lower threshold={lower_threshold}: {outliers_lower}\")\n",
+        "print(f\"  (More outliers are detected as points can be closer to the mean.)\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "zm66VOdiOEsA",
+        "outputId": "b16e9065-9049-4472-81dc-457439b1322c"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[100, 102, 103]"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 25
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "FtsG2JlhOnl-"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
